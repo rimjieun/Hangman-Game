@@ -124,7 +124,7 @@ document.onkeyup = function(event) {
 
 			document.getElementById("guessLeft").innerHTML = "Attempts: " + attempts;
 
-			document.getElementById("lettersTried").innerHTML = "Letters tried: " + triedList.join(", ");
+			document.getElementById("lettersTried").innerHTML = "Letters tried: " + triedList.toString(", ");
 
 		}
 
