@@ -3,33 +3,109 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Rim | Potter Hangman</title>
+	
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+	<link href="https://fonts.googleapis.com/css?family=Tangerine" rel="stylesheet">
+
 	<link rel="stylesheet" type ="text/css" href="assets/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+
 	
+
 </head>
 <body>
+
+	<audio autoplay id="audioPlayer"><source src="assets/sound/hedwigstheme.mp3" type="audio/mp3"></audio>
 	
-	<h1>Cast the right spell to defeat the Dark Lord.</h1>
 
-	<img id="scroll" src="assets/images/scroll.jpg" alt="Scroll">
 
-	<div id="scrollContent">
-		<div id="spellBox"></div>
-		<div id="progressBoard">
-			<p id=guessLeft>Attempts: 10</p>
-			<p id=lettersTried>Letters tried: </p>
-			<img id="hint" src="assets/images/sortinghat.png" alt="Hint">
+
+	
+
+<div class="container">
+	<div id="header" class="row" >
+		<div class="col-lg-10 col-lg-offset-1" >
+		<h1>Cast the right spell to defeat the Dark Lord.</h1>
 		</div>
 	</div>
 
-	<div id=scoreBoard>
-		<p id="victories">Victories: 0</p>
-		<p id="defeats">Defeats: 0</p>
+
+	<div class="row" >
+		<div class="col-lg-12">
+			<div id="mainPanel" class="panel panel-default">
+			  <div class="panel-body text-center">
+			   	<img id="scroll" src="assets/images/scroll2.png" alt="Scroll" class="img-fluid">
+					<img id="sortingHat" src="assets/images/sortinghat.png" alt="Hint" class="img-responsive">
+			  </div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-lg-12">
+
+					<div id="wordPanel" class="panel panel-default">
+					  <div class="panel-body text-center">
+					   	<div id="spell"></div>
+					  </div>
+					</div>
+
+					
+				</div>
+			</div>
+
+
+
+
+			<div class="row">
+				<div class="col-lg-8">
+					<div id="lettersPanel" class="panel panel-default">
+					  <div class="panel-body">
+					   	<p id="lettersTried">Letters tried: </p>
+					   	<p id="guessList"></p>
+					  </div>
+					</div>
+				</div>
+				<div class="col-lg-2">
+					<div id="attemptsPanel" class="panel panel-default">
+					  <div class="panel-body text-center">
+					   	<p id="attemptsLeft">Attempts: 10</p>
+					  </div>
+					</div>
+				</div>
+			</div>
+
+		</div>
 	</div>
 
+	<div id="scorePanel" class="row">
+		<p id="victories">Victories: 0</p>
+		<span id="defeats">Defeats: 0</span>
+		
+	</div>
+	
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 <script type="text/javascript" src="assets/javascript/game.js"></script>
-
-
 
 	
 </body>

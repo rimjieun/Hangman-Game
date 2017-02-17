@@ -1,16 +1,15 @@
-//need sound effects for pressing letter, hint, win, lose
+// VARIABLES DECLARED----------------------------------------
 
 var attempts = 10;
 var victories = 0;
 var defeats = 0;
-var triedList = [];
-var correct = false;
-
+var guessList = [];
+var oneGuessAway = false;
+var alreadyGuessed = [];
 
 var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-//is it better practice to declare another variable for uppercase since not all languages are case sensitive?
 
-var spellsList = [
+var wordsList = [
 	"riddikulus",
 	"obliviate",
 	"sectumsempra",
@@ -20,126 +19,181 @@ var spellsList = [
 	"expelliarmus",
 	"wingardium leviosa",
 	"accio",
-	"expecto patronum",
+	"expecto patronum"
 ];
 
-var spell = "";
+var word = "";
 
-var hiddenSpell = [];
+var hiddenWord = [];
 
+var correctGuesses = [];
 
-
-// var containAllLetters = function() { //do I even need to fill in ()?
-
-// 	for (i = 0; (i < hiddenSpell.length) && (bool = true); i++) {
-
-// 		if (hiddenSpell[i] === spell.charAt(i)) {
-// 			bool = true;
-// 		}
-
-// 		else {
-// 			bool = false;
-// 		}
-
-// 	}
-// };
-
-var containsHidden = function() {
-	for (i = 0; i < hiddenSpell.length; i++) {
-		if (hiddenSpell[i] === "_") {
-			correct = false;
-			break; //hiddenSpell contains "_"
-		}
-		else {
-			correct = true;
-		}
-	}
-}
+var lettersList = [];
 
 
-var resetSpell = function() {
+// FUNCTIONS-------------------------------------------------
 
-	hiddenSpell = [];
+var resetWord = function() {
+
+	hiddenWord = [];
 	attempts = 10;
-	triedList = [];
+	guessList = [];
+	correctGuesses = [];
+	lettersList = [];
 	
-
-	spell = spellsList[Math.floor(Math.random() * spellsList.length)];
-	spell = spell.toUpperCase();
+	word = wordsList[Math.floor(Math.random() * wordsList.length)];
+	word = word.toUpperCase(); //can i just add this to end of previous statement?
 	
+	listLetters();
 
-	for (i = 0; i < spell.length; i++) {
+	for (i = 0; i < word.length; i++) {
 
-			console.log(spell);		
-			hiddenSpell.push(spell.charAt(i));
+			console.log(word);		
+			hiddenWord.push(word.charAt(i));
 
-			if (alphabet.includes(hiddenSpell[i])) {	
-				hiddenSpell[i] = "_";
+			if (alphabet.includes(hiddenWord[i])) {	
+				hiddenWord[i] = "_";
 			}
 
 			else {
-				hiddenSpell[i] = "/";
+				hiddenWord[i] = "/"
 			}
 
 	}
-	document.getElementById("spellBox").innerHTML = hiddenSpell.join(" ");
-	document.getElementById("guessLeft").innerHTML = "Attempts: " + attempts;
-	document.getElementById("lettersTried").innerHTML = "Letters tried: " + triedList;
+	document.getElementById("spell").innerHTML = hiddenWord.join(" ");
+	document.getElementById("attemptsLeft").innerHTML = "Attempts: " + attempts;
+	document.getElementById("guessList").innerHTML = guessList;
 };
 
 
-//-------------------------------------------------------------------------------
-resetSpell();
+
+var listLetters = function() {
+	for (i = 0; i < word.length; i++) {
+		if ((!lettersList.includes(word.charAt(i))) && (word.charAt(i) !== " ")) {
+			lettersList.push(word.charAt(i));
+			
+		}
+	}
+	console.log(lettersList);
+};
+
+var winRound = function() {
+		victories++;
+		document.getElementById("victories").innerHTML = "Victories: " + victories;
+		resetWord();
+};
+
+
+var loseRound = function() {
+		defeats++;
+		document.getElementById("defeats").innerHTML = "Defeats: " + defeats;
+		resetWord();
+};
+
+var loseAttempt = function() {
+		attempts--;
+		document.getElementById("attemptsLeft").innerHTML = "Attempts: " + attempts;
+
+};
+
+
+var pushToCorrect = function(input) {
+
+		if (!correctGuesses.includes(input)) {
+			correctGuesses.push(input);
+			console.log(correctGuesses);
+		}
+
+	};
+
+var statusCheck = function() {
+		
+
+		if (lettersList.length - correctGuesses.length < 1) {
+			oneGuessAway = true;
+		}
+		else {
+			oneGuessAway = false;
+		}
+
+
+};
+
+
+
+var updateGuessList = function(input) {
+		if (guessList.includes(input)) {
+			console.log(guessList); //chk
+			document.getElementById("guessList").innerHTML = guessList.join(" ");
+
+		}
+
+		else {
+			console.log(guessList); //chk
+			guessList.push(input);
+			loseAttempt();
+
+
+			document.getElementById("guessList").innerHTML = guessList.join(" ");
+
+
+		}
+
+
+	};
+
+
+var placeLetter = function(input) {
+
+		for (i = 0; i < word.length; i++) {
+			if (word.charAt(i) === input) {
+
+				hiddenWord[i] = word.charAt(i);
+			}
+		}
+		document.getElementById("spell").innerHTML = hiddenWord.join(" ");
+	};
+
+
+
+
+
+resetWord();
 
 document.onkeyup = function(event) {
 
 	var guess = event.key.toUpperCase();
 	
-	if (spell.includes(guess))  {
-		containsHidden();
-		if (correct = false) {
-			for (i = 0; i < spell.length; i++) {
-				if (spell.charAt(i) === guess) {
-					hiddenSpell[i] = spell.charAt(i);
+	if (alphabet.includes(guess)) {
+
+		if (word.includes(guess)) {
+
+			pushToCorrect(guess);
+			statusCheck();
+
+			if (oneGuessAway == true) {
+
+				winRound();
+			}
+			else {
+				if (attempts > 0) {
+					placeLetter(guess);
+				}
+				else {
+					resetWord();
 				}
 			}
-			document.getElementById("spellBox").innerHTML = hiddenSpell.join(" ");
-		}
-		
-		else {
-			victories++;
-			document.getElementById("victories").innerHTML = "Victories: " + victories;
-			resetSpell();
-			
-		}
-	}
-
-	else {
-
-		if (attempts > 1) {
-
-			attempts--;
-
-			triedList.push(guess);
-
-			document.getElementById("guessLeft").innerHTML = "Attempts: " + attempts;
-
-			document.getElementById("lettersTried").innerHTML = "Letters tried: " + triedList.toString(", ");
-
 		}
 
 		else {
-			defeats++;
-			document.getElementById("defeats").innerHTML = "Defeats: " + defeats;
-			resetSpell();
-			
+			if (attempts > 1) {
+				placeLetter(guess);
+				updateGuessList(guess);
+			}
+			else {
+				loseRound();
+			}
 		}
-		
 	}
-	
 
 }
-
-
-
-
