@@ -177,6 +177,7 @@ document.onkeyup = function(event) {
 			}
 			else {
 				if (attempts > 0) {
+					
 					placeLetter(guess);
 				}
 				else {
