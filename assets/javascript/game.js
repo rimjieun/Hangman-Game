@@ -1,15 +1,18 @@
 // VARIABLES DECLARED----------------------------------------
 
-var attempts = 10;
-var victories = 0;
-var defeats = 0;
-var guessList = [];
-var oneGuessAway = false;
-var alreadyGuessed = [];
+var attempts = 10;				// attempts left in game
+var victories = 0; 				// rounds won
+var defeats = 0; 					// rounds lost
+var word = "";						// randomly generated word
+var hiddenWord = [];			// blank spaces replacing word
+var lettersList = [];			// list of all different letters in a word
+var guessList = [];				// list of incorrect guesses
+var correctGuesses = [];	// list of correct guesses
+var oneGuessAway = false;	// condition checked to win
 
-var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";	// to differentiate letters from non-letters
 
-var wordsList = [
+var wordsList = [					// list of words to randomly generate
 	"riddikulus",
 	"obliviate",
 	"sectumsempra",
@@ -21,14 +24,6 @@ var wordsList = [
 	"accio",
 	"expecto patronum"
 ];
-
-var word = "";
-
-var hiddenWord = [];
-
-var correctGuesses = [];
-
-var lettersList = [];
 
 
 // FUNCTIONS-------------------------------------------------
@@ -66,7 +61,6 @@ var resetWord = function() {
 };
 
 
-
 var listLetters = function() {
 	for (i = 0; i < word.length; i++) {
 		if ((!lettersList.includes(word.charAt(i))) && (word.charAt(i) !== " ")) {
@@ -77,34 +71,33 @@ var listLetters = function() {
 	console.log(lettersList);
 };
 
-var winRound = function() {
-		victories++;
-		document.getElementById("victories").innerHTML = "Victories: " + victories;
-		resetWord();
+
+var placeLetter = function(input) {
+
+	for (i = 0; i < word.length; i++) {
+		if (word.charAt(i) === input) {
+
+			hiddenWord[i] = word.charAt(i);
+		}
+	}
+	document.getElementById("spell").innerHTML = hiddenWord.join(" ");
 };
 
-
-var loseRound = function() {
-		defeats++;
-		document.getElementById("defeats").innerHTML = "Defeats: " + defeats;
-		resetWord();
-};
 
 var loseAttempt = function() {
 		attempts--;
 		document.getElementById("attemptsLeft").innerHTML = "Attempts: " + attempts;
-
 };
 
 
 var pushToCorrect = function(input) {
 
-		if (!correctGuesses.includes(input)) {
-			correctGuesses.push(input);
-			console.log(correctGuesses);
-		}
+	if (!correctGuesses.includes(input)) {
+		correctGuesses.push(input);
+		console.log(correctGuesses);
+	}
 
-	};
+};
 
 var statusCheck = function() {
 		
@@ -115,8 +108,6 @@ var statusCheck = function() {
 		else {
 			oneGuessAway = false;
 		}
-
-
 };
 
 
@@ -135,26 +126,22 @@ var updateGuessList = function(input) {
 
 
 			document.getElementById("guessList").innerHTML = guessList.join(" ");
-
-
 		}
-
 
 	};
 
-
-var placeLetter = function(input) {
-
-		for (i = 0; i < word.length; i++) {
-			if (word.charAt(i) === input) {
-
-				hiddenWord[i] = word.charAt(i);
-			}
-		}
-		document.getElementById("spell").innerHTML = hiddenWord.join(" ");
-	};
+var winRound = function() {
+		victories++;
+		document.getElementById("victories").innerHTML = "Victories: " + victories;
+		resetWord();
+};
 
 
+var loseRound = function() {
+		defeats++;
+		document.getElementById("defeats").innerHTML = "Defeats: " + defeats;
+		resetWord();
+};
 
 
 
